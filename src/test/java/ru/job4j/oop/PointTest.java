@@ -1,10 +1,9 @@
 package ru.job4j.oop;
 
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class PointTest extends TestCase {
+public class PointTest {
 
     @Test
     public void testDistance1() {
