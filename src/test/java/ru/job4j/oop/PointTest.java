@@ -24,7 +24,7 @@ public class PointTest {
     }
 
     @Test
-    public void testDistance3d() {
+    public void whenPointA001PointB023DistanceIs2point82() {
         double expected = 2.82;
         Point a = new Point(0, 0, 1);
         Point b = new Point(0, 2, 3);
@@ -33,7 +33,7 @@ public class PointTest {
     }
 
     @Test
-    public void testDistance3d2() {
+    public void whenPointA051PointB023DistanceIs3point61() {
         double expected = 3.61;
         Point a = new Point(0, 5, 1);
         Point b = new Point(0, 2, 3);
