@@ -18,4 +18,7 @@ public class Surgeon extends Doctor {
         }
     }
 
+    public void speech() {
+        super.speech();
+    }
 }
