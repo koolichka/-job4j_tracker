@@ -50,8 +50,20 @@ public class Tracker {
         if (index == -1) {
             return false;
         }
-        items[index] = item;
         item.setId(id);
+        items[index] = item;
         return true;
+    }
+
+    public boolean delete(int id) {
+        if (indexOf(id) != -1) {
+            int index = indexOf(id);
+            System.arraycopy(items, index + 1, items, index, size - index);
+            items[size - 1] = null;
+            size--;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
