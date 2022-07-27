@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 public interface Transport {
-    void ride(boolean ride);
+    void ride();
 
     void passengers(int numberOfPassengers);
 

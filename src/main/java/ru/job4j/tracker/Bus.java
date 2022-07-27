@@ -4,13 +4,13 @@ public class Bus implements Transport {
     private int fuelCost = 52;
 
     @Override
-    public void ride(boolean ride) {
-
+    public void ride() {
+        System.out.println("Let's ride!");
     }
 
     @Override
     public void passengers(int numberOfPassengers) {
-
+        System.out.println("Количество пассажиров: " + numberOfPassengers);
     }
 
     @Override
