@@ -1,7 +1,9 @@
 package ru.job4j.tracker;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class ValidateInputTest {
 
@@ -31,11 +33,12 @@ public class ValidateInputTest {
     public void whenValidInputRepeat() {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] {"1", "1"}
-        );
+                new String[] {"0", "1"}
+                );
         ValidateInput input = new ValidateInput(out, in);
-        int selected = input.askInt("Enter menu:");
-        assertThat(selected).isEqualTo(1);
+        int[] actual = {input.askInt("Enter menu:"), input.askInt("Enter menu.")};
+        int[] expected = {0, 1};
+        Assert.assertArrayEquals(actual, expected);
     }
 
     @Test
