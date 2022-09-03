@@ -1,9 +1,9 @@
 package ru.job4j.early;
 
 public class PasswordValidator {
-    public static String validate(String password) throws InvalidPasswordException {
+    public static String validate(String password) {
 
-        boolean hasDigit = false;
+        boolean hasDigit = true;
         boolean hasLetterOrDigit = false;
         boolean forbiddenValues = true;
         String[] invalidPassword = {"qwerty", "12345", "password", "admin", "user"};
@@ -11,13 +11,16 @@ public class PasswordValidator {
         if (password != null) {
 
             if (password.length() < 8 || password.length() > 32) {
-                throw new InvalidPasswordException(1);
+                throw new IllegalArgumentException(
+                        "The password length cannot be less than 8 or more than 32 characters.");
             }
             if (password.equals(password.toLowerCase())) {
-                throw new InvalidPasswordException(2);
+                throw new IllegalArgumentException(
+                        "The password must contain uppercase character.");
             }
             if (password.equals(password.toUpperCase())) {
-                throw new InvalidPasswordException(3);
+                throw new IllegalArgumentException(
+                        "The password must contain lowercase character.");
             }
             for (String pass : invalidPassword) {
                 if (password.toLowerCase().contains(pass.toLowerCase())) {
@@ -25,37 +28,29 @@ public class PasswordValidator {
                     break;
                 }
             }
-
             for (int index = 0; index < password.length(); index++) {
                 char ch = password.charAt(index);
                 if (Character.isDigit(ch)) {
-                    hasDigit = true;
+                    hasDigit = false;
                 }
-                if (ch >= 32 && ch <= 47 || ch >= 58 && ch <= 64
-                        || ch >= 91 && ch <= 96 || ch >= 123 && ch <= 126) {
+                if (!Character.isLetterOrDigit(ch)) {
                     hasLetterOrDigit = true;
                 }
             }
-
-            if (!hasDigit) {
-                throw new InvalidPasswordException(4);
+            if (hasDigit) {
+                throw new IllegalArgumentException(
+                        "The password must contain a digit.");
             }
             if (!hasLetterOrDigit) {
-                throw new InvalidPasswordException(5);
+                throw new IllegalArgumentException(
+                        "The password must contain special character.");
             }
             if (!forbiddenValues) {
-                throw new InvalidPasswordException(6);
+                throw new IllegalArgumentException(
+                        "The password contains forbidden values.");
             }
             return password;
         }
         throw new IllegalArgumentException("Password is null.");
     }
-
-   /* public static void main(String[] args) {
-        try {
-            System.out.println(validate("nullusekkkk1kk+qwertL"));
-        } catch (InvalidPasswordException e) {
-            System.out.println(e.printMessage());
-        }
-    }*/
 }

@@ -18,10 +18,10 @@ public class PasswordValidatorTest {
 
     @Test
     public void whenLengthIsIncorrect() {
-        InvalidPasswordException exception = assertThrows(
-                InvalidPasswordException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 () -> {
-                    PasswordValidator.validate("sdsdasasaasdadadads");
+                    PasswordValidator.validate("adads");
                 });
         assertThat(exception.getMessage()).isEqualTo(
                 "The password length cannot be less than 8 or more than 32 characters.");
@@ -29,8 +29,8 @@ public class PasswordValidatorTest {
 
     @Test
     public void whenUpperCaseIsMissing() {
-        InvalidPasswordException exception = assertThrows(
-                InvalidPasswordException.class,
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
                 () -> {
                     PasswordValidator.validate("sdsdasasaasdadadads");
                 });
@@ -39,7 +39,51 @@ public class PasswordValidatorTest {
     }
 
     @Test
-    public void whenPasswordCorrect() throws InvalidPasswordException {
+    public void whenLowerCaseIsMissing() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    PasswordValidator.validate("AAAAAAASSSSSSS");
+                });
+        assertThat(exception.getMessage()).isEqualTo(
+                "The password must contain lowercase character.");
+    }
+
+    @Test
+    public void whenDigitIsMissing() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    PasswordValidator.validate("AAAAasSSSSSSS");
+                });
+        assertThat(exception.getMessage()).isEqualTo(
+                "The password must contain a digit.");
+    }
+
+    @Test
+    public void whenSpecialCharIsMissing() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    PasswordValidator.validate("AAAAas12aSSSSS");
+                });
+        assertThat(exception.getMessage()).isEqualTo(
+                "The password must contain special character.");
+    }
+
+    @Test
+    public void whenContentForbiddenValues() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> {
+                    PasswordValidator.validate("AUseras+12aSSSSS");
+                });
+        assertThat(exception.getMessage()).isEqualTo(
+                "The password contains forbidden values.");
+    }
+
+    @Test
+    public void whenPasswordCorrect() {
         String expected = "Pswr12+qw";
         String result = PasswordValidator.validate("Pswr12+qw");
         assertThat(result).isEqualTo(expected);
