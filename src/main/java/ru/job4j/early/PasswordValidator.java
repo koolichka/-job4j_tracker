@@ -32,9 +32,14 @@ public class PasswordValidator {
                 char ch = password.charAt(index);
                 if (Character.isDigit(ch)) {
                     hasDigit = false;
+                    break;
                 }
+            }
+            for (int index = 0; index < password.length(); index++) {
+                char ch = password.charAt(index);
                 if (!Character.isLetterOrDigit(ch)) {
                     hasLetterOrDigit = true;
+                    break;
                 }
             }
             if (hasDigit) {
