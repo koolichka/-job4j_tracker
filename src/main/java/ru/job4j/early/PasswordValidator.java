@@ -24,21 +24,22 @@ public class PasswordValidator {
             throw new IllegalArgumentException(
                     "The password must contain lowercase character.");
         }
+        for (String pass : invalidPassword) {
+            if (password.toLowerCase().contains(pass.toLowerCase())) {
+                forbiddenValues = false;
+                break;
+            }
+        }
         for (int index = 0; index < password.length(); index++) {
             char ch = password.charAt(index);
-            for (String pass : invalidPassword) {
-                if (password.toLowerCase().contains(pass.toLowerCase())) {
-                    forbiddenValues = false;
-                    break;
-                }
-            }
+
             if (Character.isDigit(ch)) {
                 hasDigit = true;
             }
             if (!Character.isLetterOrDigit(ch)) {
                 hasLetterOrDigit = true;
             }
-            if (hasDigit && hasLetterOrDigit && forbiddenValues) {
+            if (hasDigit && hasLetterOrDigit) {
                 break;
             }
         }
